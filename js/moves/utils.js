@@ -1,6 +1,7 @@
-export function isSquareOccupied(square) {
-    const piece = square.querySelector(".piece");
-    return piece ? piece.getAttribute("color") : "empty";
+export function isSquareOccupied(squareId, game) {
+    const pieceChar = game.getPiece(squareId);
+    if (!pieceChar) return "empty";
+    return pieceChar === pieceChar.toUpperCase() ? "white" : "black";
 }
 
 export function isWithinBounds(id) {

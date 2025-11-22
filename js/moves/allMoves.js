@@ -4,15 +4,14 @@ import { getKnightMoves } from './knight.js';
 import { getBishopMoves } from './bishop.js';
 import { getQueenMoves } from './queen.js';
 import { getKingMoves } from './king.js';
-import { legalSquares } from '../drag.js';
 
-export function getPossibleMoves(startId, piece) {
-    const color = piece.getAttribute("color");
 
-    if (piece.classList.contains("pawn")) getPawnMoves(startId, color);
-    else if (piece.classList.contains("rook")) getRookMoves(startId, color);
-    else if (piece.classList.contains("knight")) getKnightMoves(startId, color);
-    else if (piece.classList.contains("bishop")) getBishopMoves(startId, color);
-    else if (piece.classList.contains("queen")) getQueenMoves(startId, color);
-    else if (piece.classList.contains("king")) getKingMoves(startId, color);
+export function getPossibleMoves(startId, pieceType, color, game, moves = []) {
+    if (pieceType === "pawn") getPawnMoves(startId, color, game, moves);
+    else if (pieceType === "rook") getRookMoves(startId, color, game, moves);
+    else if (pieceType === "knight") getKnightMoves(startId, color, game, moves);
+    else if (pieceType === "bishop") getBishopMoves(startId, color, game, moves);
+    else if (pieceType === "queen") getQueenMoves(startId, color, game, moves);
+    else if (pieceType === "king") getKingMoves(startId, color, game, moves);
+    return moves;
 }

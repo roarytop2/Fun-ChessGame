@@ -5,6 +5,7 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #cecece;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .chess_board {
@@ -12,6 +13,8 @@ body {
     height: min(80vw, 80vh);
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    /* For modal positioning if needed, though modal is fixed */
 }
 
 .square {
@@ -27,22 +30,28 @@ body {
 .dark {
     background-color: #b58863;
 }
+
 .coordinate {
-    height:auto;
-    display:flex;
-    right:4%;
+    height: auto;
+    display: flex;
+    right: 4%;
     position: absolute;
     font-size: 13px;
+    pointer-events: none;
+    /* Prevent interference with clicks */
 }
+
 .rank {
-    bottom:4%;
-    right:auto;
-    left:4%;
+    bottom: 4%;
+    right: auto;
+    left: 4%;
 }
+
 .darkText {
-    color:#b58863 ;
+    color: #b58863;
 }
-.lightText{
+
+.lightText {
     color: #f0d9b5;
 }
 
@@ -55,6 +64,140 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    cursor: grab;
+}
+
+.piece img:active {
+    cursor: grabbing;
+}
+
+/* UI Improvements */
+
+/* Check Highlight */
+.in-check {
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 70%);
+}
+
+/* Legal Move Highlight */
+.legal-move::after {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.legal-move.piece-capture::after {
+    width: 80%;
+    height: 80%;
+    background: transparent;
+    border: 5px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+/* Selected Piece Highlight */
+.selected-piece {
+    background-color: rgba(255, 255, 0, 0.5) !important;
+}
+
+/* Game Over Modal */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+/* Promotion Modal Specific Styles */
+.promotion-pieces {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.promotion-btn {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promotion-btn:hover {
+    background-color: #e0e0e0;
+    border-color: #4CAF50;
+    transform: scale(1.1);
+}
+
+.promotion-img {
+    width: 60px;
+    height: 60px;
+    display: none;
+}
+
+.promotion-img.white-piece {
+    display: block;
+}
+
+#promotionModal[data-color="black"] .white-piece {
+    display: none;
+}
+
+#promotionModal[data-color="black"] .black-piece {
+    display: block;
+}
+
+.restart-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.restart-btn:hover {
+    background-color: #45a049;
 }
 
 @media (min-width: 600px) {
